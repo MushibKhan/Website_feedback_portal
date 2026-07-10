@@ -17,10 +17,8 @@ app.use(cors());
 app.use(helmet()); 
 app.use(morgan("dev")); 
 app.use(express.json()); 
-app.use(errorHandler);
-
-
 app.use("/api/feedbacks", feedbackRoutes);    // Mounts the feedback routes on the "/api/feedbacks" path, so any requests to this path will be handled by the feedback routes.
+app.use(errorHandler); // Always use the errorHandler middleware after all other middleware and routes to catch any errors that occur during request processing and send an appropriate response to the client.
 
 // Test Route
 app.get("/", (req, res) => {        // Defines a GET route for the root URL ("/").

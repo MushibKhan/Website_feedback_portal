@@ -29,6 +29,13 @@ export const getFeedback = asyncHandler(async (req, res) => {
   return ApiResponse.success(res, "Feedback fetched successfully.", feedback);
 });
 
+// Controller function to handle updating feedback.
+export const updateFeedback = asyncHandler(async (req, res) => {
+  const feedback = await feedbackService.updateFeedbackService(req.body);
+
+  return ApiResponse.success(res, "Feedback updated successfully.", feedback);
+});
+
 // module.exports = {     // Exports the controller function so it can be used in other files (like routes).
 //     getAllFeedbacks
 // };

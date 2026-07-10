@@ -73,7 +73,7 @@ export const createFeedbackService = async (feedbackData) => {
  */
 export const getFeedbackById = async (id) => {
   const feedbacks = await getAllFeedbacks();
-  const feedback = feedbacks.find((item) => item.id === id);
+  const feedback = feedbacks.find((item) => item.id === Number(id));
 
   if (!feedback) {
     throw new AppError("Feedback not found.", 404);
@@ -88,10 +88,11 @@ export const getFeedbackById = async (id) => {
  If the feedback is not found, it throws an error. Finally, it writes the updated feedbacks back to the JSON file and returns the updated feedback.
  */
 
-export const updateFeedbackService = (feedbackData) => {
-  const feedbacks = readFeedbacks();
+export const updateFeedbackService = async (feedbackData) => {
+  const feedbacks = await getAllFeedbacks();
+
   const index = feedbacks.findIndex(
-    (feedback) => feedback.id === feedbackData.id,
+    (feedback) => feedback.id === Number(feedbackData.id),
   );
 
   if (index === -1) {
@@ -110,7 +111,8 @@ export const updateFeedbackService = (feedbackData) => {
     updatedAt: new Date().toISOString(),
   };
 
-  writeFeedbacks(feedbacks);
+  await writeFeedbacks(feedbacks);
+
   return feedbacks[index];
 };
 
